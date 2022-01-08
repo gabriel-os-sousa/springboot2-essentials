@@ -1,6 +1,8 @@
 package dev.gabriel.springboot2.controller;
 
 import dev.gabriel.springboot2.domain.Anime;
+import dev.gabriel.springboot2.requests.AnimePostRequestBody;
+import dev.gabriel.springboot2.requests.AnimePutRequestBody;
 import dev.gabriel.springboot2.service.AnimeService;
 import dev.gabriel.springboot2.util.DateUtil;
 import lombok.RequiredArgsConstructor;
@@ -29,11 +31,11 @@ public class AnimeController {
     @GetMapping(path = "/{id}")
     public ResponseEntity<Anime> list(@PathVariable long id) {
         log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
-        return ResponseEntity.ok(animeService.findById(id));
+        return ResponseEntity.ok(animeService.findByIdOrThrowBadRequestException(id));
     }
 
     @PostMapping
-    public ResponseEntity<Anime> save(@RequestBody Anime anime) {
+    public ResponseEntity<Anime> save(@RequestBody AnimePostRequestBody anime) {
         return new ResponseEntity<>(animeService.save(anime), HttpStatus.CREATED);
     }
 
@@ -44,8 +46,8 @@ public class AnimeController {
     }
 
     @PutMapping
-    public ResponseEntity<Void> replace(@RequestBody Anime anime) {
-        animeService.replace(anime);
+    public ResponseEntity<Void> replace(@RequestBody AnimePutRequestBody animePutRequestBody) {
+        animeService.replace(animePutRequestBody);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
