@@ -5,12 +5,9 @@ import dev.gabriel.springboot2.mapper.AnimeMapper;
 import dev.gabriel.springboot2.repository.AnimeRepository;
 import dev.gabriel.springboot2.requests.AnimePostRequestBody;
 import dev.gabriel.springboot2.requests.AnimePutRequestBody;
-import exception.BadRequestException;
-import lombok.NoArgsConstructor;
+import dev.gabriel.springboot2.exception.BadRequestException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
