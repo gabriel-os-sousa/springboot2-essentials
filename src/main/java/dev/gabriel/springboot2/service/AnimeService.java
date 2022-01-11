@@ -9,6 +9,7 @@ import dev.gabriel.springboot2.exception.BadRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -29,6 +30,9 @@ public class AnimeService {
                 .orElseThrow(() -> new BadRequestException("Anime not found!"));
     }
 
+    // @Transactional(rollbackOn = Exception.class)
+    // Rollback em caso de exceção (Para Exception.class, colocar @Transactional(rollbackOn = Exception.class))
+    @Transactional
     public Anime save(AnimePostRequestBody animePostRequestBody) {
         return animeRepository.save(AnimeMapper.INSTANCE.toAnime(animePostRequestBody));
     }
