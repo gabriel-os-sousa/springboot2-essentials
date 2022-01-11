@@ -1,6 +1,7 @@
 package dev.gabriel.springboot2.requests;
 
 import lombok.Data;
+import org.hibernate.validator.constraints.URL;
 
 import javax.validation.constraints.NotEmpty;
 
@@ -10,4 +11,8 @@ public class AnimePostRequestBody {
     // @NotNull faz parte do @NotEmpty
     // @NotNull(message = "The anime name cannot be null") // Atributo não pode ser nulo
     private String name;
+
+    // Campo para teste no ValidationExceptionDetails
+    @URL(message = "The URL is not valid")
+    private String url;
 }
