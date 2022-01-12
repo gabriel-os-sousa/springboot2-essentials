@@ -24,7 +24,8 @@ public class SpringClient {
 
         // Aqui eu não restorno o Array, mas sim um List
         // O exchange é mais se for passar algumas coisas na requisição, Ex: headers de autenticação e etc
-        ResponseEntity<List<Anime>> exchange = new RestTemplate().exchange("http://localhost:8080/animes/all", HttpMethod.GET, null, new ParameterizedTypeReference<>() {});
+        ResponseEntity<List<Anime>> exchange = new RestTemplate().exchange("http://localhost:8080/animes/all", HttpMethod.GET, null, new ParameterizedTypeReference<>() {
+        });
         log.info(exchange.getBody());
 
         // POST
@@ -33,8 +34,26 @@ public class SpringClient {
 //        log.info("SAVED ANIME {}", kingdomSaved);
 
         Anime samurai = Anime.builder().name("Samurai Shamploo").build();
-        ResponseEntity<Anime> samuraiSaved = new RestTemplate().exchange("http://localhost:8080/animes/", HttpMethod.POST, new HttpEntity<>(samurai, createJsonHeader()), Anime.class);
+        ResponseEntity<Anime> samuraiSaved = new RestTemplate().exchange("http://localhost:8080/animes/",
+                HttpMethod.POST,
+                new HttpEntity<>(samurai, createJsonHeader()), Anime.class);
         log.info("SAVED ANIME {}", samuraiSaved);
+
+        Anime animeToBeUpdated = samuraiSaved.getBody();
+        animeToBeUpdated.setName("Samurai Shamploo 2");
+
+        ResponseEntity<Void> samuraiUpdated = new RestTemplate().exchange("http://localhost:8080/animes/",
+                HttpMethod.PUT,
+                new HttpEntity<>(animeToBeUpdated, createJsonHeader()),
+                Void.class);
+        log.info(samuraiUpdated);
+
+        ResponseEntity<Void> samuraiDeleted = new RestTemplate().exchange("http://localhost:8080/animes/{id}",
+                HttpMethod.DELETE,
+                null,
+                Void.class,
+                animeToBeUpdated.getId());
+        log.info(samuraiDeleted);
     }
 
     private static HttpHeaders createJsonHeader() {
