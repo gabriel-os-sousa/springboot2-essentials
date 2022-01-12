@@ -11,8 +11,4 @@ public class AnimePostRequestBody {
     // @NotNull faz parte do @NotEmpty
     // @NotNull(message = "The anime name cannot be null") // Atributo não pode ser nulo
     private String name;
-
-    // Campo para teste no ValidationExceptionDetails
-    @URL(message = "The URL is not valid")
-    private String url;
 }
