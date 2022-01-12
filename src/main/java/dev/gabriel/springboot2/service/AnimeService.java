@@ -23,6 +23,10 @@ public class AnimeService {
         return animeRepository.findAll(pageable);
     }
 
+    public List<Anime> listAllNonPageable() {
+        return animeRepository.findAll();
+    }
+
     public List<Anime> findByName(String name) {
         return animeRepository.findByName(name);
     }
@@ -31,9 +35,9 @@ public class AnimeService {
         return animeRepository.findById(id)
                 .orElseThrow(() -> new BadRequestException("Anime not found!"));
     }
-
     // @Transactional(rollbackOn = Exception.class)
     // Rollback em caso de exceção (Para Exception.class, colocar @Transactional(rollbackOn = Exception.class))
+
     @Transactional
     public Anime save(AnimePostRequestBody animePostRequestBody) {
         return animeRepository.save(AnimeMapper.INSTANCE.toAnime(animePostRequestBody));
